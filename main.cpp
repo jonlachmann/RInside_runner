@@ -5,6 +5,7 @@
 int main(int argc, char *argv[]) {
     std::cout << "Starting RInside..." << std::endl;
     RInside R(argc, argv);
+    R.parseEvalQ("options(cppPath = getwd())");
 
     std::cout << "Running initial R code..." << std::endl;
     auto start = std::chrono::high_resolution_clock::now();
@@ -18,7 +19,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Running main R code..." << std::endl;
     start = std::chrono::high_resolution_clock::now();
 
-    R.parseEvalQ("source('../main.R')");
+    R.parseEvalQ("source(paste0(getOption('cppPath'), '/../main.R'))");
 
     end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> main_time = end - start;
